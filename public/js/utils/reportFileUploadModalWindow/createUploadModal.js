@@ -1,4 +1,5 @@
 import showReport from "../../showReport.js";
+import loadExcelLibs from "../../loadExcelLibs.js";
 import reportFileParser from "../reportsFileParser/index.js";
 import downloadReportsInZip from "./downloadReportsInZip.js";
 import writeReportToLocalStorage from "../../writeReportToLocalStorage.js";
@@ -231,6 +232,8 @@ var createUploadBtn = () => {
     var { reportsData } = await reportFileParser(files);
 
     if (reportsData.length > 1) {
+      var { JSZip } = await loadExcelLibs();
+
       var zip = new JSZip();
       var folder = zip.folder("Отчёты");
 

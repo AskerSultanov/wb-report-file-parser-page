@@ -1,3 +1,4 @@
+import loadExcelLibs from "../../loadExcelLibs.js";
 import splitSkusByYear from "./utils/splitReportsByYear.js";
 import getMonthlySummary from "./utils/getMonthlySummary.js";
 import getReportDateRange from "./utils/getReportDateRange.js";
@@ -6,6 +7,8 @@ import writeTotalValuesToSheet from "./utils/writeTotalValuesToSheet.js";
 import calcReportTotalsFromSkus from "../calcUtils/utils/calcReportTotalsFromSkus.js";
 
 var generateMonthlySummaryXlsxBuffer = async (reports) => {
+  var { ExcelJS } = await loadExcelLibs();
+
   var workbook = new ExcelJS.Workbook();
 
   var crossYearPeriodReport = reports.find(

@@ -1,7 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Расшифровка финансового отчёта Wildberries без регистрации — бесплатно
+    </title>
+    <meta
+      name="description"
+      content="Бесплатная расшифровка финансового отчёта Wildberries без регистрации. Расшифровка SKU, расходов и итогов в понятной таблице. Скачать в Excel."
+    />
+    <link rel="canonical" href="https://free-report-scanner.ru/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Расшифровка финансового отчёта Wildberries без регистрации"
+    />
+    <meta
+      property="og:description"
+      content="Загрузите отчёт WB — получите понятную таблицу с расшифровкой SKU и итогами. Бесплатно, без регистрации."
+    />
+    <meta property="og:url" content="https://free-report-scanner.ru/" />
+    <!-- TODO: добавить файл og-preview.png 1200x630 в public/image -->
+    <meta
+      property="og:image"
+      content="https://free-report-scanner.ru/public/image/og-preview.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="icon" href="/public/image/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/public/css/modalWindow.css" type="text/css" />
     <link
       rel="stylesheet"
@@ -9,37 +36,77 @@
       type="text/css"
     />
     <link rel="stylesheet" href="/public/css/index.css" type="text/css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/public/image/favicon.ico" type="image/x-icon" />
-    <title>Расшифровка финансового отчета wildberries без регистрации</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Расшифровка финансового отчёта Wildberries",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RUB" },
+        "description": "Бесплатная расшифровка финансового отчёта Wildberries без регистрации."
+      }
+    </script>
   </head>
 
   <body>
-    <button id="decode-report-button" type="button">
-      Расшифровка отчета без регистрации
-    </button>
-    <div class="auth-buttons">
-      <a href="$SITE/auth" id="auth" onclick="window.localStorage.clear()"
-        >Войти</a
-      >
-      <a
-        href="$SITE/reg"
-        id="registration"
-        onclick="window.localStorage.clear()"
-        >Регистрация</a
-      >
-    </div>
-    <div id="tables-container"></div>
-    <button hidden id="download-report-as-xlsx-button">
-      Скачать отчет как эксель
-    </button>
+    <header class="site-header">
+      <div class="auth-buttons">
+        <a href="$SITE/auth" id="auth" onclick="window.localStorage.clear()"
+          >Войти</a
+        >
+        <a
+          href="$SITE/reg"
+          id="registration"
+          onclick="window.localStorage.clear()"
+          >Регистрация</a
+        >
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>Расшифровка финансового отчёта Wildberries без регистрации</h1>
+        <p class="lead">
+          Загрузите отчёт WB — получите понятную таблицу с расшифровкой SKU,
+          расходами и итогами. Бесплатно, без регистрации.
+        </p>
+        <button id="decode-report-button" type="button">
+          Расшифровка отчёта без регистрации
+        </button>
+        <button hidden id="download-report-as-xlsx-button">
+          Скачать отчёт как эксель
+        </button>
+      </section>
+
+      <section class="info-block">
+        <h2>Что вы получите</h2>
+        <ul>
+          <li>Расшифровку всех SKU из отчёта Wildberries</li>
+          <li>Расчёт расходов, удержаний и комиссий</li>
+          <li>Итоговые суммы по отчёту</li>
+          <li>Возможность скачать результат в Excel</li>
+        </ul>
+      </section>
+
+      <section class="info-block">
+        <h2>Как это работает</h2>
+        <ol>
+          <li>Нажмите «Расшифровка отчёта без регистрации»</li>
+          <li>Загрузите файл отчёта WB</li>
+          <li>Получите таблицу с расшифровкой</li>
+          <li>Скачайте результат в Excel</li>
+        </ol>
+      </section>
+
+      <div id="tables-container" aria-live="polite"></div>
+    </main>
+
     <script src="/public/js/index.js" type="module"></script>
     <script src="/public/js/showReportIfExist.js" type="module"></script>
     <script
       src="/public/js/decodeReportButtonHandler.js"
       type="module"
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.2/dist/jszip.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
   </body>
 </html>

@@ -1,3 +1,4 @@
+import loadExcelLibs from "../../loadExcelLibs.js";
 import createSkusSheet from "./utils/createSKUsSheet.js";
 import createTotalsSheet from "./utils/createTotalsSheet.js";
 import calcReportTotalsFromSkus from "../calcUtils/utils/calcReportTotalsFromSkus.js";
@@ -9,6 +10,8 @@ import {
 var totalsSheetName = "Сводка";
 
 var generateReportXlsxBuffer = async (report) => {
+  var { ExcelJS } = await loadExcelLibs();
+
   var { dateFrom, dateTo, skus, isCrossYearPeriod } = report;
 
   var reportTotals = {};
