@@ -26,12 +26,12 @@ var alignmentStyles = {
 };
 
 var writeSKUsToSheet = (sheet, skus) => {
-  var rowNum = 2;
+  var startRowNum = 6;
 
   for (var i = 0; i < skus.length; i++) {
     for (var j = 0; j < columns.length; j++) {
       var column = columns[j];
-      var cellAddress = column + rowNum;
+      var cellAddress = column + startRowNum;
 
       var skuField = requiredSkusFieldsName[j];
       var skuFieldValue = skus[i][skuField];
@@ -41,9 +41,9 @@ var writeSKUsToSheet = (sheet, skus) => {
       sheet.getCell(cellAddress).value = skuFieldValue;
     }
 
-    setFormulasToSkusSheet(sheet, rowNum);
+    setFormulasToSkusSheet(sheet, startRowNum);
 
-    ++rowNum;
+    ++startRowNum;
   }
 
   return sheet;

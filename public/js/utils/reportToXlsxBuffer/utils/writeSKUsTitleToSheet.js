@@ -30,19 +30,20 @@ var alignmentStyles = {
   wrapText: true,
 };
 
+var rowNumToTitle = 5;
+
 var writeSKUsTitleToSheet = (sheet) => {
-  var cellNum = 1;
   var columnNum = 1;
 
   for (var i = 0; i < columns.length; i++) {
-    var cellName = columns[i] + cellNum;
+    var cellAddress = columns[i] + rowNumToTitle;
 
     sheet.getColumn(columnNum).width = 17;
 
-    sheet.getCell(cellName).font = fontStyles;
-    sheet.getCell(cellName).alignment = alignmentStyles;
+    sheet.getCell(cellAddress).font = fontStyles;
+    sheet.getCell(cellAddress).alignment = alignmentStyles;
 
-    sheet.getCell(cellName).value = titles[i];
+    sheet.getCell(cellAddress).value = titles[i];
 
     columnNum++;
   }

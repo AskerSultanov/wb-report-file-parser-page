@@ -39,14 +39,14 @@ var finalProfitCellAddress = "B17";
 var profitMarginCellAddress = "B16";
 var profitMarginCalcFormula = `TRUNC(IF(OR(${finalProfitCellAddress} = 0, ${retailAmountCellAddress} = 0), 0, ${finalProfitCellAddress} * 100 / ${retailAmountCellAddress}), 2)`;
 
-var getFormulaToProductCosts = (sheetName, skusQty) => {
-  var startRowNum = 2;
+var getFormulaToProductCosts = (sheetName, lastRowNum) => {
+  var startRowNum = 6;
 
   var startQtyCellAddress = columnsMapOfSkusSheet.qty + startRowNum;
-  var endQtyCellAddress = columnsMapOfSkusSheet.qty + skusQty;
+  var endQtyCellAddress = columnsMapOfSkusSheet.qty + lastRowNum;
 
   var startCostPriceCellAddress = columnsMapOfSkusSheet.costPrice + startRowNum;
-  var endCostPriceCellAddress = columnsMapOfSkusSheet.costPrice + skusQty;
+  var endCostPriceCellAddress = columnsMapOfSkusSheet.costPrice + lastRowNum;
 
   var productCostsFormula = `SUMPRODUCT('${sheetName}'!${startQtyCellAddress}:${endQtyCellAddress}, '${sheetName}'!${startCostPriceCellAddress}:${endCostPriceCellAddress})`;
 
@@ -54,12 +54,13 @@ var getFormulaToProductCosts = (sheetName, skusQty) => {
 };
 
 var setFormulasToTotalsSheet = (workSheet, sheetName, skusQty) => {
-  var startRowNum = 2;
+  var startRowNum = 6;
+  var lastRowNum = startRowNum + skusQty - 1;
 
   for (var rowNum in rowsMapOfTotalsSheet) {
     var rowVal = rowsMapOfTotalsSheet[rowNum];
     var startCellAddress = columnsMapOfSkusSheet[rowVal] + startRowNum;
-    var endCellAddress = columnsMapOfSkusSheet[rowVal] + skusQty;
+    var endCellAddress = columnsMapOfSkusSheet[rowVal] + lastRowNum;
 
     var formula = `SUM('${sheetName}'!${startCellAddress}:${endCellAddress})`;
 
@@ -71,7 +72,7 @@ var setFormulasToTotalsSheet = (workSheet, sheetName, skusQty) => {
     formula: profitMarginCalcFormula,
   };
 
-  var { productCostsFormula } = getFormulaToProductCosts(sheetName, skusQty);
+  var { productCostsFormula } = getFormulaToProductCosts(sheetName, lastRowNum);
 
   workSheet.getCell(productCostsCellAddress).value = {
     formula: productCostsFormula,

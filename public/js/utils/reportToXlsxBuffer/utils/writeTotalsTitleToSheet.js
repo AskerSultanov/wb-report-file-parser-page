@@ -17,12 +17,13 @@ var totalTitles = [
   "Итого",
 ];
 
+var firstColumnNum = 1;
+
 var fontStyles = { bold: true, font: 10 };
 var alignmentStyles = { vertical: "middle", horizontal: "left" };
 
 var writeTotalsTitleToSheet = (sheet, cellNum) => {
   var cellName = "A";
-  var firstColumnNum = 1;
 
   sheet.getColumn(firstColumnNum).width = 27;
   sheet.getColumn(firstColumnNum).font = fontStyles;

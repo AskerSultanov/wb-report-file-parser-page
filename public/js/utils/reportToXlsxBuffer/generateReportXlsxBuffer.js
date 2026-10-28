@@ -110,7 +110,7 @@ var generateReportXlsxBuffer = async (report) => {
 
     await createSkusSheet(skus, skusSheet);
 
-    setFormulasToTotalsSheet(totalsSheet, sheetName, skus.length + 1);
+    setFormulasToTotalsSheet(totalsSheet, sheetName, skus.length);
   }
 
   var buffer = await workbook.xlsx.writeBuffer();
