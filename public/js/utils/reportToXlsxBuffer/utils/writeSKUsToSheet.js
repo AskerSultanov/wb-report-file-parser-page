@@ -18,6 +18,8 @@ var columns = [
   "N",
   "O",
   "P",
+  "Q",
+  "R",
 ];
 
 var alignmentStyles = {
@@ -25,7 +27,7 @@ var alignmentStyles = {
   horizontal: "center",
 };
 
-var writeSKUsToSheet = (sheet, skus) => {
+var writeSKUsToSheet = (workSheet, skus) => {
   var startRowNum = 6;
 
   for (var i = 0; i < skus.length; i++) {
@@ -36,17 +38,16 @@ var writeSKUsToSheet = (sheet, skus) => {
       var skuField = requiredSkusFieldsName[j];
       var skuFieldValue = skus[i][skuField];
 
-      sheet.getCell(cellAddress).alignment = alignmentStyles;
-
-      sheet.getCell(cellAddress).value = skuFieldValue;
+      workSheet.getCell(cellAddress).value = skuFieldValue;
+      workSheet.getCell(cellAddress).alignment = alignmentStyles;
     }
 
-    setFormulasToSkusSheet(sheet, startRowNum);
+    setFormulasToSkusSheet(workSheet, startRowNum);
 
     ++startRowNum;
   }
 
-  return sheet;
+  return workSheet;
 };
 
 export { writeSKUsToSheet, columns };

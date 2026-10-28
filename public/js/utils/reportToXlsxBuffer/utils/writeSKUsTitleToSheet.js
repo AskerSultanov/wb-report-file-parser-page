@@ -5,6 +5,7 @@ var titles = [
   "Кол-во",
   "Возвраты",
   "WB реализовал",
+  "Налогооблагаемая база (УСН Доходы)",
   "Выплаты продавцу",
   "Доставка",
   "Удержания/    выплаты",
@@ -15,6 +16,7 @@ var titles = [
   "Выплата с вычетом всех услуг WB",
   "Себестоимость 1ед.",
   "Прочите расходы",
+  "Налоги",
   "Маржинальность %",
   "Итого",
 ];
@@ -30,25 +32,24 @@ var alignmentStyles = {
   wrapText: true,
 };
 
-var rowNumToTitle = 5;
+var columnWidth = 17;
+var titleRowNum = 5;
 
-var writeSKUsTitleToSheet = (sheet) => {
+var writeSKUsTitleToSheet = (workSheet) => {
   var columnNum = 1;
 
   for (var i = 0; i < columns.length; i++) {
-    var cellAddress = columns[i] + rowNumToTitle;
+    var cellAddress = columns[i] + titleRowNum;
 
-    sheet.getColumn(columnNum).width = 17;
-
-    sheet.getCell(cellAddress).font = fontStyles;
-    sheet.getCell(cellAddress).alignment = alignmentStyles;
-
-    sheet.getCell(cellAddress).value = titles[i];
+    workSheet.getCell(cellAddress).value = titles[i];
+    workSheet.getCell(cellAddress).font = fontStyles;
+    workSheet.getColumn(columnNum).width = columnWidth;
+    workSheet.getCell(cellAddress).alignment = alignmentStyles;
 
     columnNum++;
   }
 
-  return sheet;
+  return workSheet;
 };
 
 export default writeSKUsTitleToSheet;

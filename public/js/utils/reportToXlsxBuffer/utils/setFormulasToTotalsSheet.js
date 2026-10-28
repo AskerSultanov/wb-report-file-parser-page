@@ -2,44 +2,48 @@ var columnsMapOfSkusSheet = {
   qty: "B",
   returnAmount: "C",
   retailAmount: "D",
-  sellerPayoutAmount: "E",
-  deliveryCost: "F",
-  deductionOrPayment: "G",
-  avrgAdvert: "H",
-  storageCost: "I",
-  acceptance: "J",
-  fines: "K",
-  profit: "L",
-  costPrice: "M",
-  otherExpenses: "N",
-  finalProfit: "P",
+  taxableAmount: "E",
+  sellerPayoutAmount: "F",
+  deliveryCost: "G",
+  deductionOrPayment: "H",
+  avrgAdvert: "I",
+  storageCost: "J",
+  acceptance: "K",
+  fines: "L",
+  profit: "M",
+  costPrice: "N",
+  otherExpenses: "O",
+  tax: "P",
+  finalProfit: "R",
 };
 
 var rowsMapOfTotalsSheet = {
   4: "retailAmount",
-  5: "qty",
-  6: "returnAmount",
-  7: "sellerPayoutAmount",
-  8: "costPrice",
-  9: "otherExpenses",
-  10: "deliveryCost",
-  11: "acceptance",
-  12: "fines",
-  13: "deductionOrPayment",
-  14: "storageCost",
-  15: "avrgAdvert",
-  17: "finalProfit",
+  5: "taxableAmount",
+  6: "qty",
+  7: "returnAmount",
+  8: "sellerPayoutAmount",
+  9: "costPrice",
+  10: "otherExpenses",
+  11: "deliveryCost",
+  12: "acceptance",
+  13: "fines",
+  14: "deductionOrPayment",
+  15: "storageCost",
+  16: "avrgAdvert",
+  17: "tax",
+  19: "finalProfit",
 };
 
 var valuesColumn = "B";
 
-var productCostsCellAddress = "B8";
+var productCostsCellAddress = "B9";
 var retailAmountCellAddress = "B4";
-var finalProfitCellAddress = "B17";
-var profitMarginCellAddress = "B16";
+var finalProfitCellAddress = "B19";
+var profitMarginCellAddress = "B18";
 var profitMarginCalcFormula = `TRUNC(IF(OR(${finalProfitCellAddress} = 0, ${retailAmountCellAddress} = 0), 0, ${finalProfitCellAddress} * 100 / ${retailAmountCellAddress}), 2)`;
 
-var getFormulaToProductCosts = (sheetName, lastRowNum) => {
+var getFormulaToProductCosts = (workSheetName, lastRowNum) => {
   var startRowNum = 6;
 
   var startQtyCellAddress = columnsMapOfSkusSheet.qty + startRowNum;
@@ -48,12 +52,12 @@ var getFormulaToProductCosts = (sheetName, lastRowNum) => {
   var startCostPriceCellAddress = columnsMapOfSkusSheet.costPrice + startRowNum;
   var endCostPriceCellAddress = columnsMapOfSkusSheet.costPrice + lastRowNum;
 
-  var productCostsFormula = `SUMPRODUCT('${sheetName}'!${startQtyCellAddress}:${endQtyCellAddress}, '${sheetName}'!${startCostPriceCellAddress}:${endCostPriceCellAddress})`;
+  var productCostsFormula = `SUMPRODUCT('${workSheetName}'!${startQtyCellAddress}:${endQtyCellAddress}, '${workSheetName}'!${startCostPriceCellAddress}:${endCostPriceCellAddress})`;
 
   return { productCostsFormula };
 };
 
-var setFormulasToTotalsSheet = (workSheet, sheetName, skusQty) => {
+var setFormulasToTotalsSheet = (workSheet, workSheetName, skusQty) => {
   var startRowNum = 6;
   var lastRowNum = startRowNum + skusQty - 1;
 
@@ -62,7 +66,7 @@ var setFormulasToTotalsSheet = (workSheet, sheetName, skusQty) => {
     var startCellAddress = columnsMapOfSkusSheet[rowVal] + startRowNum;
     var endCellAddress = columnsMapOfSkusSheet[rowVal] + lastRowNum;
 
-    var formula = `SUM('${sheetName}'!${startCellAddress}:${endCellAddress})`;
+    var formula = `SUM('${workSheetName}'!${startCellAddress}:${endCellAddress})`;
 
     var formulaCellAddress = valuesColumn + rowNum;
     workSheet.getCell(formulaCellAddress).value = { formula };
@@ -72,7 +76,10 @@ var setFormulasToTotalsSheet = (workSheet, sheetName, skusQty) => {
     formula: profitMarginCalcFormula,
   };
 
-  var { productCostsFormula } = getFormulaToProductCosts(sheetName, lastRowNum);
+  var { productCostsFormula } = getFormulaToProductCosts(
+    workSheetName,
+    lastRowNum,
+  );
 
   workSheet.getCell(productCostsCellAddress).value = {
     formula: productCostsFormula,
@@ -84,7 +91,7 @@ var setFormulasToParentTotalsSheet = (workSheet, childTotalSheetsName) => {
     var targetCellAddress = valuesColumn + rowNum;
 
     var formulaPart = childTotalSheetsName
-      .map((name) => `'${name}'!${targetCellAddress}`)
+      .map((workSheetName) => `'${workSheetName}'!${targetCellAddress}`)
       .join(",");
 
     var formula = `SUM(${formulaPart})`;

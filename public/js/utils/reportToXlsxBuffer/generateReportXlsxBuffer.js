@@ -1,6 +1,7 @@
 import loadExcelLibs from "../../loadExcelLibs.js";
 import createSkusSheet from "./utils/createSKUsSheet.js";
 import createTotalsSheet from "./utils/createTotalsSheet.js";
+import setDefaultTaxRate from "./utils/setDefaultTaxRate.js";
 import calcReportTotalsFromSkus from "../calcUtils/utils/calcReportTotalsFromSkus.js";
 import {
   setFormulasToTotalsSheet,
@@ -21,7 +22,7 @@ var generateReportXlsxBuffer = async (report) => {
   var restReportTotals = calcReportTotalsFromSkus(skus).reportTotals;
 
   reportTotals = Object.assign(reportTotals, restReportTotals);
-  
+
   var workbook = new ExcelJS.Workbook();
 
   var totalsSheet = workbook.addWorksheet(totalsSheetName);
@@ -64,6 +65,8 @@ var generateReportXlsxBuffer = async (report) => {
 
       await createSkusSheet(startYearSkus, startYearSheet);
 
+      setDefaultTaxRate(startYearSheet);
+
       setFormulasToTotalsSheet(
         startYearTotalsSheet,
         startYearSkusSheetName,
@@ -95,6 +98,8 @@ var generateReportXlsxBuffer = async (report) => {
 
       await createSkusSheet(endYearSkus, endYearSheet);
 
+      setDefaultTaxRate(endYearSheet);
+
       setFormulasToTotalsSheet(
         endYearTotalsSheet,
         endYearSkusSheetName,
@@ -110,6 +115,7 @@ var generateReportXlsxBuffer = async (report) => {
 
     await createSkusSheet(skus, skusSheet);
 
+    setDefaultTaxRate(skusSheet);
     setFormulasToTotalsSheet(totalsSheet, sheetName, skus.length);
   }
 

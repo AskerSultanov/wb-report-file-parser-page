@@ -1,27 +1,23 @@
 var fontStyles = { font: 10 };
 var alignmentStyles = { vertical: "middle", horizontal: "right" };
 
-var columnName = "B";
+var columnWidth = 17;
+var columnNumOfValues = 2;
+var columnNameOfValues = "B";
 
-var unusedFields = ["taxableAmount"];
+var writeTotalValuesToSheet = (workSheet, rowNum, reportSummary) => {
+  workSheet.getColumn(columnNumOfValues).font = fontStyles;
+  workSheet.getColumn(columnNumOfValues).width = columnWidth;
+  workSheet.getColumn(columnNumOfValues).alignment = alignmentStyles;
 
-var writeTotalValuesToSheet = (sheet, cellNum, totalValues) => {
-  sheet.getColumn(2).width = 17;
-  sheet.getColumn(2).font = fontStyles;
-  sheet.getColumn(2).alignment = alignmentStyles;
+  for (var key in reportSummary) {
+    var cellAddress = columnNameOfValues + rowNum;
+    rowNum++;
 
-  for (var key in totalValues) {
-    if (unusedFields.includes(key)) {
-      continue;
-    }
-
-    var currentCell = columnName + cellNum;
-    cellNum++;
-
-    sheet.getCell(currentCell).value = totalValues[key] ?? "";
+    workSheet.getCell(cellAddress).value = reportSummary[key] ?? "";
   }
 
-  return sheet;
+  return workSheet;
 };
 
 export default writeTotalValuesToSheet;

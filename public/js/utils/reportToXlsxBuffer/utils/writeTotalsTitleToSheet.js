@@ -1,7 +1,8 @@
-var totalTitles = [
+var titles = [
   "Начало отчетного периода",
   "Конец отчетного периода",
   "Сумма продаж",
+  "Налогооблагаемая база (УСН Доходы)",
   "Продано шт.",
   "Возвратов шт.",
   "К перечислению за товар",
@@ -13,31 +14,32 @@ var totalTitles = [
   "Удержания/выплаты",
   "Хранение",
   "Реклама",
+  "Налоги",
   "Маржинальность %",
   "Итого",
 ];
 
-var firstColumnNum = 1;
+var columnWidth = 27;
+var columnNumOfTitles = 1;
+var columnNameOfTitles = "A";
 
 var fontStyles = { bold: true, font: 10 };
 var alignmentStyles = { vertical: "middle", horizontal: "left" };
 
-var writeTotalsTitleToSheet = (sheet, cellNum) => {
-  var cellName = "A";
+var writeTotalsTitleToSheet = (workSheet, rowNum) => {
+  workSheet.getColumn(columnNumOfTitles).font = fontStyles;
+  workSheet.getColumn(columnNumOfTitles).width = columnWidth;
+  workSheet.getColumn(columnNumOfTitles).alignment = alignmentStyles;
 
-  sheet.getColumn(firstColumnNum).width = 27;
-  sheet.getColumn(firstColumnNum).font = fontStyles;
-  sheet.getColumn(firstColumnNum).alignment = alignmentStyles;
+  for (var title of titles) {
+    var cellAddress = columnNameOfTitles + rowNum;
 
-  for (var title of totalTitles) {
-    var currentCell = cellName + cellNum;
+    workSheet.getCell(cellAddress).value = title;
 
-    sheet.getCell(currentCell).value = title;
-
-    cellNum++;
+    rowNum++;
   }
 
-  return sheet;
+  return workSheet;
 };
 
 export default writeTotalsTitleToSheet;
