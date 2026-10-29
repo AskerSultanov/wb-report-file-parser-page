@@ -1,25 +1,4 @@
-var requiredSkusFieldsName = [
-  "skuName",
-  "qty",
-  "returnAmount",
-  "retailAmount",
-  "taxableAmount",
-  "sellerPayoutAmount",
-  "deliveryCost",
-  "deductionOrPayment",
-  "averageAdvertisingCost",
-  "storageCost",
-  "acceptance",
-  "fines",
-  "profit",
-  "costPrice",
-  "otherExpenses",
-  "tax",
-  "profitMargin",
-  "finalProfit",
-];
-
-var getRequiredSkusFieldsName = (skus) =>
+var getRequiredSkuKeys = (skus) =>
   skus.map((sku) => {
     return {
       skuName: sku.skuName,
@@ -43,4 +22,4 @@ var getRequiredSkusFieldsName = (skus) =>
     };
   });
 
-export { getRequiredSkusFieldsName, requiredSkusFieldsName };
+export default getRequiredSkuKeys;

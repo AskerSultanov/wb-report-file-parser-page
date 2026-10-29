@@ -76,7 +76,7 @@ var getFinalProfitCalcFormula = (rowNum) => {
   return { finalProfitCalcFormula: { formula: finalProfitCalcFormula } };
 };
 
-var setFormulasToSkusSheet = (workSheet, rowNum) => {
+var setFormulasToSkusWorkSheet = (workSheet, rowNum) => {
   var { taxCalcFormula } = getTaxCalcFormula(rowNum);
   var { profitCalcFormula } = getProfitCalcFormula(rowNum);
   var { finalProfitCalcFormula } = getFinalProfitCalcFormula(rowNum);
@@ -93,4 +93,4 @@ var setFormulasToSkusSheet = (workSheet, rowNum) => {
   workSheet.getCell(profitMarginCellAddress).value = profitMarginCalcFormula;
 };
 
-export default setFormulasToSkusSheet;
+export default setFormulasToSkusWorkSheet;

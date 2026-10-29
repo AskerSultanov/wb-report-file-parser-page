@@ -19,14 +19,16 @@ var titles = [
   "Итого",
 ];
 
-var columnWidth = 27;
+var columnWidth = 30;
 var columnNumOfTitles = 1;
 var columnNameOfTitles = "A";
 
 var fontStyles = { bold: true, font: 10 };
 var alignmentStyles = { vertical: "middle", horizontal: "left" };
 
-var writeTotalsTitleToSheet = (workSheet, rowNum) => {
+var writeTitlesToSummaryWorkSheet = (workSheet) => {
+  var rowNum = 2;
+
   workSheet.getColumn(columnNumOfTitles).font = fontStyles;
   workSheet.getColumn(columnNumOfTitles).width = columnWidth;
   workSheet.getColumn(columnNumOfTitles).alignment = alignmentStyles;
@@ -42,4 +44,4 @@ var writeTotalsTitleToSheet = (workSheet, rowNum) => {
   return workSheet;
 };
 
-export default writeTotalsTitleToSheet;
+export default writeTitlesToSummaryWorkSheet;

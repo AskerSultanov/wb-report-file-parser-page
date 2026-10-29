@@ -57,7 +57,7 @@ var getFormulaToProductCosts = (workSheetName, lastRowNum) => {
   return { productCostsFormula };
 };
 
-var setFormulasToTotalsSheet = (workSheet, workSheetName, skusQty) => {
+var setFormulasToSummaryWorkSheet = (workSheet, workSheetName, skusQty) => {
   var startRowNum = 6;
   var lastRowNum = startRowNum + skusQty - 1;
 
@@ -86,7 +86,7 @@ var setFormulasToTotalsSheet = (workSheet, workSheetName, skusQty) => {
   };
 };
 
-var setFormulasToParentTotalsSheet = (workSheet, childTotalSheetsName) => {
+var setFormulasToParentSummaryWorkSheet = (workSheet, childTotalSheetsName) => {
   for (var rowNum in rowsMapOfTotalsSheet) {
     var targetCellAddress = valuesColumn + rowNum;
 
@@ -104,4 +104,4 @@ var setFormulasToParentTotalsSheet = (workSheet, childTotalSheetsName) => {
   };
 };
 
-export { setFormulasToTotalsSheet, setFormulasToParentTotalsSheet };
+export { setFormulasToSummaryWorkSheet, setFormulasToParentSummaryWorkSheet };

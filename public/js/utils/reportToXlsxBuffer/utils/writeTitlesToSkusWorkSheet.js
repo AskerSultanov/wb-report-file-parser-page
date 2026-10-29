@@ -1,4 +1,5 @@
-import { columns } from "./writeSKUsToSheet.js";
+import { columns } from "./writeValuesToSkusWorkSheet.js";
+import setStylesToSkusWorkSheet from "./setStylesToSkusWorkSheet.js";
 
 var titles = [
   "Артикул",
@@ -21,35 +22,25 @@ var titles = [
   "Итого",
 ];
 
-var fontStyles = {
-  bold: true,
-  font: 10,
-};
-
-var alignmentStyles = {
-  vertical: "middle",
-  horizontal: "center",
-  wrapText: true,
-};
-
-var columnWidth = 17;
 var titleRowNum = 5;
 
-var writeSKUsTitleToSheet = (workSheet) => {
+var writeTitlesToSkusWorkSheet = (workSheet) => {
   var columnNum = 1;
+  var titleCount = 0;
 
-  for (var i = 0; i < columns.length; i++) {
-    var cellAddress = columns[i] + titleRowNum;
+  for (var column of columns) {
+    var title = titles[titleCount];
+    var cellAddress = column + titleRowNum;
 
-    workSheet.getCell(cellAddress).value = titles[i];
-    workSheet.getCell(cellAddress).font = fontStyles;
-    workSheet.getColumn(columnNum).width = columnWidth;
-    workSheet.getCell(cellAddress).alignment = alignmentStyles;
+    workSheet.getCell(cellAddress).value = title;
+
+    setStylesToSkusWorkSheet(workSheet, columnNum, cellAddress);
 
     columnNum++;
+    titleCount++;
   }
 
   return workSheet;
 };
 
-export default writeSKUsTitleToSheet;
+export default writeTitlesToSkusWorkSheet;

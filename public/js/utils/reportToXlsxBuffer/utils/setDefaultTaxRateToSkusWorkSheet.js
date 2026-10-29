@@ -12,7 +12,7 @@ var alignmentStyles = {
 
 var fontStyles = { bold: true, font: 10 };
 
-var setDefaultTaxRate = (workSheet) => {
+var setDefaultTaxRateToSkusWorkSheet = (workSheet) => {
   workSheet.getCell(taxRateCellAddress).value = defaultTaxRate;
   workSheet.getCell(taxRateTextCellAddress).value = taxRateText;
 
@@ -24,4 +24,4 @@ var setDefaultTaxRate = (workSheet) => {
   workSheet.getCell(taxRateTextCellAddress).alignment = alignmentStyles;
 };
 
-export default setDefaultTaxRate;
+export default setDefaultTaxRateToSkusWorkSheet;

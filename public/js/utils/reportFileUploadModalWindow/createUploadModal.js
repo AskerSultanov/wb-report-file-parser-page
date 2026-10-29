@@ -2,12 +2,9 @@ import showReport from "../../showReport.js";
 import loadExcelLibs from "../../loadExcelLibs.js";
 import reportFileParser from "../reportsFileParser/index.js";
 import downloadReportsInZip from "./downloadReportsInZip.js";
+import { generateReportXlsxBuffer } from "../reportToXlsxBuffer/index.js";
 import writeReportToLocalStorage from "../../writeReportToLocalStorage.js";
 import downloadReportAsXLSXButtonHandler from "../../downloadReportAsXLSXButtonHandler.js";
-import {
-  generateReportXlsxBuffer,
-  generateMonthlySummaryXlsxBuffer,
-} from "../reportToXlsxBuffer/index.js";
 
 var maxFilesCount = 15;
 var selectedFiles = [];
@@ -245,9 +242,7 @@ var createUploadBtn = () => {
         folder.file(fileNameForSeparateReport, buffer);
       }
 
-      var { buffer } = await generateMonthlySummaryXlsxBuffer(reportsData);
-
-      folder.file("Сводка.xlsx", buffer);
+      // var { buffer } = await generateReportsSummaryXlsxBuffer(reportsData);
 
       var zipBuffer = await zip.generateAsync({
         type: "arrayBuffer",
