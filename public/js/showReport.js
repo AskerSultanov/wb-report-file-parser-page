@@ -79,6 +79,9 @@ var showReport = async (report) => {
       tablesSwitcherHandler(startYear, endYear);
       return;
     }
+
+    isCrossYearPeriod = false;
+    report.isCrossYearPeriod = false;
   }
 
   createTotalsTable(
