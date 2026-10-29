@@ -1,7 +1,6 @@
 import loadExcelLibs from "../../loadExcelLibs.js";
 import createSkusWorkSheet from "./utils/createSkusWorkSheet.js";
 import createSummaryWorkSheet from "./utils/createSummaryWorkSheet.js";
-import calcReportTotalsFromSkus from "../calcUtils/utils/calcReportTotalsFromSkus.js";
 import setDefaultTaxRateToSkusWorkSheet from "./utils/setDefaultTaxRateToSkusWorkSheet.js";
 import {
   setFormulasToSummaryWorkSheet,
@@ -15,25 +14,15 @@ var generateReportXlsxBuffer = async (report) => {
 
   var { dateFrom, dateTo, skus, isCrossYearPeriod } = report;
 
-  var reportTotals = {};
-  reportTotals.dateFrom = dateFrom;
-  reportTotals.dateTo = dateTo;
-
-  var restReportTotals = calcReportTotalsFromSkus(skus).reportTotals;
-
-  reportTotals = Object.assign(reportTotals, restReportTotals);
-
   var workbook = new ExcelJS.Workbook();
 
   var summaryWorkSheet = workbook.addWorksheet(summaryWorkSheetName);
 
-  summaryWorkSheet = await createSummaryWorkSheet(
-    reportTotals,
-    summaryWorkSheet,
-  );
+  createSummaryWorkSheet(summaryWorkSheet, dateFrom, dateTo);
 
   if (isCrossYearPeriod) {
     var childSummaryWorkSheetsName = [];
+
     var startYear = +dateFrom.split("-")[0];
     var startYearSkus = skus.filter((sku) => sku.year === startYear);
 
@@ -46,20 +35,14 @@ var generateReportXlsxBuffer = async (report) => {
         startYearSummaryWorkSheetName,
       );
 
-      var startYearTotals =
-        calcReportTotalsFromSkus(startYearSkus).reportTotals;
+      var periodEnd = startYear + "-12-31";
 
-      startYearTotals = Object.assign(reportTotals, startYearTotals);
-
-      startYearSummaryWorkSheet = await createSummaryWorkSheet(
-        startYearTotals,
-        startYearSummaryWorkSheet,
-      );
+      createSummaryWorkSheet(startYearSummaryWorkSheet, dateFrom, periodEnd);
 
       var startYearSkusWorkSheetName = "Товары " + startYear;
       var startYearSheet = workbook.addWorksheet(startYearSkusWorkSheetName);
 
-      await createSkusWorkSheet(startYearSkus, startYearSheet);
+      createSkusWorkSheet(startYearSkus, startYearSheet);
 
       setDefaultTaxRateToSkusWorkSheet(startYearSheet);
 
@@ -81,19 +64,13 @@ var generateReportXlsxBuffer = async (report) => {
         endYearSummaryWorkSheetName,
       );
 
-      var endYearTotals = calcReportTotalsFromSkus(endYearSkus).reportTotals;
-
-      endYearTotals = Object.assign(reportTotals, endYearTotals);
-
-      endYearTotalsSheet = await createSummaryWorkSheet(
-        endYearTotals,
-        endYearTotalsSheet,
-      );
+      var periodStart = endYear + "-01-01";
+      createSummaryWorkSheet(endYearTotalsSheet, periodStart, dateTo);
 
       var endYearSkusWorkSheetName = "Товары " + endYear;
       var endYearSheet = workbook.addWorksheet(endYearSkusWorkSheetName);
 
-      await createSkusWorkSheet(endYearSkus, endYearSheet);
+      createSkusWorkSheet(endYearSkus, endYearSheet);
 
       setDefaultTaxRateToSkusWorkSheet(endYearSheet);
 
@@ -113,7 +90,7 @@ var generateReportXlsxBuffer = async (report) => {
     var skusWorkSheetName = "Товары " + year;
     var skusSheet = workbook.addWorksheet(skusWorkSheetName);
 
-    await createSkusWorkSheet(skus, skusSheet);
+    createSkusWorkSheet(skus, skusSheet);
 
     setDefaultTaxRateToSkusWorkSheet(skusSheet);
 
