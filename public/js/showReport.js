@@ -72,7 +72,7 @@ var showReport = async (report) => {
           reportPeriodText,
         );
 
-        createSkusTable(report, reportPart, year);
+        createSkusTable(report, reportPart);
       }
 
       switchToFirstTable(startYear);
@@ -88,7 +88,7 @@ var showReport = async (report) => {
     reportSummaryLabelTextStub,
   );
 
-  createSkusTable(report, skus, startYear);
+  createSkusTable(report, skus);
 
   enableDownloadReportAsXLSXButton();
   downloadReportAsXlsxuttonHandler(reportId);
