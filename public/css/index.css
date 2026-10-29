@@ -281,6 +281,28 @@ th:last-child {
   margin-top: 6px;
 }
 
+.info-blocks-row {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  width: 100%;
+  /* 792px = 760px контента hero + его внутренние отступы по 16px */
+  max-width: 792px;
+  margin: 0 auto 32px;
+  padding: 0 16px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.info-block {
+  flex: 1 1 320px;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
 #decode-report-button:focus-visible,
 #download-report-as-xlsx-button:focus-visible,
 #download-reports-in-zip:focus-visible,
