@@ -84,6 +84,11 @@ body {
   .hero {
     padding: 24px 16px;
   }
+
+  #download-reports-in-zip {
+    width: calc(100% - 32px);
+    max-width: 320px;
+  }
 }
 
 #skus-table {
@@ -102,6 +107,38 @@ body {
   cursor: pointer;
   transition: all 0.3s;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Кнопка скачивания архива, когда из файлов получилось несколько отчётов */
+#download-reports-in-zip {
+  display: block;
+  margin: 0 auto 24px;
+  min-height: 44px;
+  padding: 0 32px;
+  background-color: #343a40;
+  color: #ffffff;
+  border: 1.6px solid #495057;
+  border-radius: 6.4px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#download-reports-in-zip:hover {
+  background-color: #495057;
+  border-color: #6c757d;
+  transform: translateY(-1px);
+}
+
+#download-reports-in-zip:active {
+  transform: translateY(0);
 }
 
 table {
@@ -246,6 +283,7 @@ th:last-child {
 
 #decode-report-button:focus-visible,
 #download-report-as-xlsx-button:focus-visible,
+#download-reports-in-zip:focus-visible,
 #auth:focus-visible,
 #registration:focus-visible,
 .info-block a:focus-visible {

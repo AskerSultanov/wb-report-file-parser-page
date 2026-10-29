@@ -1,9 +1,9 @@
 import showReport from "../../showReport.js";
 import loadExcelLibs from "../../loadExcelLibs.js";
 import reportFileParser from "../reportsFileParser/index.js";
-import downloadReportsInZip from "./downloadReportsInZip.js";
 import { generateReportXlsxBuffer } from "../reportToXlsxBuffer/index.js";
 import writeReportToLocalStorage from "../../writeReportToLocalStorage.js";
+import insertButtonToDownloadReportsInZip from "./insertButtonToDownloadReportsInZip.js";
 import downloadReportAsXLSXButtonHandler from "../../downloadReportAsXLSXButtonHandler.js";
 
 var maxFilesCount = 15;
@@ -249,7 +249,7 @@ var createUploadBtn = () => {
         compression: "DEFLATE",
       });
 
-      downloadReportsInZip(zipBuffer);
+      insertButtonToDownloadReportsInZip(zipBuffer);
     } else {
       var report = reportsData[0];
 
