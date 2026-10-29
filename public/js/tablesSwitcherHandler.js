@@ -1,20 +1,29 @@
 import toggleTablesVisibility from "./toggleTablesVisibility.js";
+import scrollToTablesSwitcher from "./scrollToTablesSwitcher.js";
+
+var bindTabSwitcher = (year, otherYear) => {
+  var tab = document.getElementById(year);
+
+  tab.addEventListener("click", () => {
+    if (tab.classList.contains("is-active")) {
+      return;
+    }
+
+    toggleTablesVisibility(otherYear, "disable");
+    toggleTablesVisibility(year, "enable");
+
+    scrollToTablesSwitcher();
+  });
+};
 
 var tablesSwitcherHandler = (startYear, endYear) => {
-  var startYearTableSwitcher = document.getElementById(startYear);
-  var endYearTableSwitcher = document.getElementById(endYear);
+  var years = [startYear, endYear];
 
-  startYearTableSwitcher.addEventListener("click", () => {
-    toggleTablesVisibility(endYear, "disable");
+  for (var year of years) {
+    var otherYear = years.find((item) => item !== year);
 
-    toggleTablesVisibility(startYear, "enable");
-  });
-
-  endYearTableSwitcher.addEventListener("click", () => {
-    toggleTablesVisibility(startYear, "disable");
-
-    toggleTablesVisibility(endYear, "enable");
-  });
+    bindTabSwitcher(year, otherYear);
+  }
 };
 
 export default tablesSwitcherHandler;
