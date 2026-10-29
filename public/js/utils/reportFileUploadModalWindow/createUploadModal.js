@@ -8,7 +8,6 @@ import downloadReportAsXLSXButtonHandler from "../../downloadReportAsXLSXButtonH
 
 var maxFilesCount = 15;
 var selectedFiles = [];
-var userId = document.cookie.split("=")[1];
 var paidStorageReportFileName = "Отчёт по платному хранению (номенклатуры)";
 var weeklyFinancialReportFileName = "Еженедельный детализированный отчет №";
 var allowedFileMimeTypes = [
@@ -206,9 +205,6 @@ var createUploadBtn = () => {
   uploadBtn.className = "modal-btn modal-btn-upload";
 
   uploadBtn.addEventListener("click", async (e) => {
-    var formData = new FormData();
-    formData.append("userId", userId);
-
     if (!selectedFiles.length) {
       alert("Выберите хотя бы один файл");
       return;
