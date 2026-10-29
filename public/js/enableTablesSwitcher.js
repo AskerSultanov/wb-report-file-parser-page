@@ -22,7 +22,9 @@ var enableTablesSwitcher = (years) => {
     switcher.append(button);
   }
 
-  document.body.prepend(switcher);
+  var tablesContainer = document.getElementById("tables-container");
+
+  tablesContainer.append(switcher);
 };
 
 export default enableTablesSwitcher;

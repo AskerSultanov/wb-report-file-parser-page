@@ -27,8 +27,6 @@ var showReport = async (report) => {
     var startYearSkus = skus.filter((sku) => sku.year === startYear);
     var endYearSkus = skus.filter((sku) => sku.year === endYear);
 
-    enableTablesSwitcher([startYear, endYear]);
-
     var fullReportPeriodText = getReportPeriodText(
       dateFrom,
       dateTo,
@@ -40,6 +38,8 @@ var showReport = async (report) => {
       isCrossYearPeriod,
       fullReportPeriodText,
     );
+
+    enableTablesSwitcher([startYear, endYear]);
 
     var startYearReportTotals =
       calcReportTotalsFromSkus(startYearSkus).reportTotals;
