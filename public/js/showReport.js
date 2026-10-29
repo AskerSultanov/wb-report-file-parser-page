@@ -1,6 +1,9 @@
 import createSkusTable from "./createSkusTable.js";
 import createTotalsTable from "./createTotalsTable.js";
+import switchToFirstTable from "./switchToFirstTable.js";
 import getReportPeriodText from "./getReportPeriodText.js";
+import enableTablesSwitcher from "./enableTablesSwitcher.js";
+import tablesSwitcherHandler from "./tablesSwitcherHandler.js";
 import downloadReportAsXlsxuttonHandler from "./downloadReportAsXLSXButtonHandler.js";
 import calcReportTotalsFromSkus from "./utils/calcUtils/utils/calcReportTotalsFromSkus.js";
 import { enableDownloadReportAsXLSXButton } from "./toggleDownloadReportAsXlsxButtonVisibility.js";
@@ -24,6 +27,8 @@ var showReport = async (report) => {
     var startYearSkus = skus.filter((sku) => sku.year === startYear);
     var endYearSkus = skus.filter((sku) => sku.year === endYear);
 
+    enableTablesSwitcher([startYear, endYear]);
+
     var fullReportPeriodText = getReportPeriodText(
       dateFrom,
       dateTo,
@@ -38,6 +43,7 @@ var showReport = async (report) => {
 
     var startYearReportTotals =
       calcReportTotalsFromSkus(startYearSkus).reportTotals;
+
     var startReportPeriodText = getReportPeriodText(
       dateFrom,
       dateTo,
@@ -50,10 +56,12 @@ var showReport = async (report) => {
       isCrossYearPeriod,
       startReportPeriodText,
     );
+
     createSkusTable(report, startYearSkus, startYear);
 
     var endYearReportTotals =
       calcReportTotalsFromSkus(endYearSkus).reportTotals;
+
     var endReportPeriodText = getReportPeriodText(
       dateFrom,
       dateTo,
@@ -66,7 +74,11 @@ var showReport = async (report) => {
       isCrossYearPeriod,
       endReportPeriodText,
     );
+
     createSkusTable(report, endYearSkus, endYear);
+
+    switchToFirstTable(startYear);
+    tablesSwitcherHandler(startYear, endYear);
   } else {
     createTotalsTable(
       reportTotals,
