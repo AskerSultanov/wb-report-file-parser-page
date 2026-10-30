@@ -50,13 +50,13 @@ var createDropZoneContent = () => {
 };
 
 var updateFileList = () => {
-  if (!selectedFiles.length) {
-    return;
-  }
-
   var fileList = document.getElementById("file-list");
   fileList.innerHTML = "";
   fileList.style.display = "block";
+
+  if (!selectedFiles.length) {
+    return;
+  }
 
   selectedFiles.forEach((file, index) => {
     var fileListItem = document.createElement("div");
@@ -77,8 +77,11 @@ var updateFileList = () => {
   document.querySelectorAll(".file-remove").forEach((btn) => {
     btn.addEventListener("click", function (e) {
       e.stopPropagation();
+
       var index = parseInt(this.dataset.index);
+
       selectedFiles.splice(index, 1);
+
       updateFileList();
 
       var dropZone = document.getElementById("drop-zone");
@@ -87,6 +90,7 @@ var updateFileList = () => {
       if (selectedFiles.length === 0) {
         dropZone.classList.remove("dragover", "has-files");
       }
+      
       fileInput.value = "";
     });
   });
