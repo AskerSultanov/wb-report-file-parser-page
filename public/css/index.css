@@ -1,4 +1,5 @@
 @import url("./theme.css");
+@import url("./footer.css");
 
 body {
   background-color: var(--bg-base);
@@ -15,26 +16,32 @@ body {
   -webkit-font-smoothing: antialiased;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
-/* Перекрывает display у элементов, которые скрываются через hidden
-   (например, сводку и таблицу второй половины периода) */
+main {
+  flex: 1 0 auto;
+}
+
 [hidden] {
   display: none !important;
 }
 
-/* ===== Группа кнопок входа в верхней панели ===== */
 .auth-buttons {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
   flex-shrink: 0;
 }
 
 #auth,
-#registration {
+#registration,
+#telegram {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -54,12 +61,14 @@ body {
   transition: var(--transition-base);
 }
 
-#registration {
+#registration,
+#telegram {
   background-color: var(--bg-elevated);
 }
 
 #auth:hover,
-#registration:hover {
+#registration:hover,
+#telegram:hover {
   background-color: var(--bg-hover);
   border-color: var(--border-accent);
   color: var(--text-primary);
@@ -105,6 +114,11 @@ body {
     width: calc(100% - 32px);
     max-width: 320px;
   }
+
+  #download-report-as-xlsx-button {
+    width: 100%;
+    max-width: 320px;
+  }
 }
 
 #skus-table {
@@ -115,21 +129,35 @@ body {
   background-color: var(--bg-elevated);
   color: var(--text-primary);
   border: 1px solid var(--border-strong);
-  padding: 0 14px;
-  min-height: 32px;
+  padding: 0 24px;
+  min-height: 44px;
   border-radius: var(--radius-full);
   font-family: inherit;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition-base);
 }
 
 #download-report-as-xlsx-button:hover {
-  background-color: var(--bg-hover);
-  border-color: var(--border-accent);
+  background-color: #217346;
+  border-color: #217346;
+  color: #fff;
   transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(33, 115, 70, 0.3);
+}
+
+.download-xlsx-wrapper {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.download-xlsx-wrapper:has(#download-report-as-xlsx-button:not([hidden])) {
+  margin: 32px auto 24px;
 }
 
 /* Кнопка скачивания архива, когда из файлов получилось несколько отчётов */
@@ -341,6 +369,7 @@ th:last-child {
 #download-reports-in-zip:focus-visible,
 #auth:focus-visible,
 #registration:focus-visible,
+#telegram:focus-visible,
 .info-block a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -350,7 +379,7 @@ th:last-child {
   box-sizing: border-box;
   width: 100%;
   max-width: 1190px;
-  margin: 0 auto 16px;
+  margin: 0 auto 24px;
   overflow-x: auto;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
@@ -400,9 +429,6 @@ th:last-child {
   width: 110px;
 }
 
-.table-scroll {
-  margin-bottom: 100px;
-}
 /* ============================================================
     Табы переключения годов (адаптация .tabs из эталона)
     ============================================================ */
