@@ -1,5 +1,5 @@
-var updateReportFromLocalStorage = (year, skuName, updatedSku) => {
-  var reportInJSON = localStorage.getItem("report");
+var updateReportFromLocalStorage = (year, skuName, updatedSku, reportId) => {
+  var reportInJSON = localStorage.getItem("report_" + reportId);
   var report = JSON.parse(reportInJSON);
 
   var skuFromLocalStorage = report.skus.find(

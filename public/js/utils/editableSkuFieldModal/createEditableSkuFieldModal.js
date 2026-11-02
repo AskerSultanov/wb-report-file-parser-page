@@ -78,7 +78,7 @@ var createEditableSkuFieldModal = (
 
     modal.remove();
 
-    var { year, skuName, isCrossYearPeriod } = skuToUpdate;
+    var { year, skuName, reportId, isCrossYearPeriod } = skuToUpdate;
 
     var skuBeforeUpdation = { ...skuToUpdate };
 
@@ -92,7 +92,7 @@ var createEditableSkuFieldModal = (
     displayElement.textContent = newValue;
 
     var { updatedSku } = calcUtils.sku.restParams(skuToUpdate);
-    updateReportFromLocalStorage(year, skuName, updatedSku);
+    updateReportFromLocalStorage(year, skuName, updatedSku, reportId);
 
     updateSkusTableFields(year, skuName, updatedSku);
 

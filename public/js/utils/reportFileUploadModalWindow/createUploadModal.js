@@ -90,7 +90,7 @@ var updateFileList = () => {
       if (selectedFiles.length === 0) {
         dropZone.classList.remove("dragover", "has-files");
       }
-      
+
       fileInput.value = "";
     });
   });
@@ -255,7 +255,7 @@ var createUploadBtn = () => {
 
       showReport(report);
       writeReportToLocalStorage(report);
-      downloadReportAsXLSXButtonHandler();
+      downloadReportAsXLSXButtonHandler(report.reportId);
     }
   });
 
