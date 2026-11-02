@@ -36,6 +36,7 @@ var showReport = async (report) => {
       ).reportPeriodText;
 
       createTotalsTable(
+        reportId,
         reportTotals,
         yearValueStub,
         isCrossYearPeriod,
@@ -66,6 +67,7 @@ var showReport = async (report) => {
         );
 
         createTotalsTable(
+          reportId,
           reportTotals,
           year,
           isCrossYearPeriod,
@@ -85,6 +87,7 @@ var showReport = async (report) => {
   }
 
   createTotalsTable(
+    reportId,
     reportTotals,
     yearValueStub,
     isCrossYearPeriod,
