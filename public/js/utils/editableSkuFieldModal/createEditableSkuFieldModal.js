@@ -8,7 +8,6 @@ import getPrevSkuValues from "./getPrevSkuValues.js";
 import updateSkusTableFields from "./updateSkusTableFields.js";
 import updateTotalsTableFields from "./updateTotalsTableFields.js";
 import replaceCommaToDotCallback from "./replaceCommaToDotCallback.js";
-import getChildTablePrevFieldsValue from "./getChildTablePrevFieldsValue.js";
 import updateReportFromLocalStorage from "./updateReportFromLocalStorage.js";
 import updateParentTotalsTableFields from "./updateParentTotalsTableFields.js";
 
@@ -98,8 +97,6 @@ var createEditableSkuFieldModal = (
     updateSkusTableFields(year, skuName, updatedSku);
 
     if (isCrossYearPeriod) {
-      var { childTablePrevData } = getChildTablePrevFieldsValue(year);
-
       updateTotalsTableFields(
         year,
         updatedSku,
@@ -107,7 +104,7 @@ var createEditableSkuFieldModal = (
         isCrossYearPeriod,
       );
 
-      updateParentTotalsTableFields(year, childTablePrevData);
+      updateParentTotalsTableFields(year);
     } else {
       updateTotalsTableFields(
         year,
