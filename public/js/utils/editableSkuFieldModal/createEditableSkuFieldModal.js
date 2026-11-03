@@ -85,7 +85,6 @@ var createEditableSkuFieldModal = (
     var { prevSkuFieldsValues } = getPrevSkuValues(
       year,
       skuName,
-      reportId,
       skuBeforeUpdation,
     );
 

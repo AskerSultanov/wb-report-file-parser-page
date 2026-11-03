@@ -1,9 +1,7 @@
-import insertAfter from "./insertAfter.js";
 import buildReportBlock from "./buildReportBlock.js";
 import getReportPeriodText from "./getReportPeriodText.js";
 import getReportFromLocalStorage from "./getReportFromLocalStorage.js";
-
-var infoBlocksRow = document.getElementById("info-blocks-row");
+import getReportControlsContainer from "./getReportControlsContainer.js";
 
 var createReportSelector = (reports) => {
   var label = document.createElement("label");
@@ -39,7 +37,8 @@ var createReportSelector = (reports) => {
   selectorContainer.id = "selector-container";
   selectorContainer.append(label, selector);
 
-  insertAfter(selectorContainer, infoBlocksRow);
+  // Селектор — левый полюс панели (контекст), действия живут в #report-actions
+  getReportControlsContainer().prepend(selectorContainer);
 };
 
 export default createReportSelector;

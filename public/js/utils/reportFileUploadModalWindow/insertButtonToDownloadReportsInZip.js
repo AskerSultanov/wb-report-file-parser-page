@@ -1,7 +1,5 @@
-import insertAfter from "../../insertAfter.js";
 import downloadReportsInZip from "./downloadReportsInZip.js";
-
-var infoBlocksRow = document.getElementById("info-blocks-row");
+import { getReportActionsContainer } from "../../getReportControlsContainer.js";
 
 var insertButtonToDownloadReportsInZip = () => {
   var button = document.createElement("button");
@@ -10,7 +8,7 @@ var insertButtonToDownloadReportsInZip = () => {
   button.textContent = "Скачать отчеты";
   button.onclick = () => downloadReportsInZip();
 
-  insertAfter(button, infoBlocksRow);
+  getReportActionsContainer().append(button);
 };
 
 export default insertButtonToDownloadReportsInZip;
