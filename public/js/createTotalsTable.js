@@ -37,17 +37,7 @@ var createTotalsTable = (
 
   table.append(tableHead, tableBody);
 
-  var tablesContainer = document.getElementById("tables-container");
-
-  if (isCrossYearPeriod) {
-    var { reportSummaryLabel } = createReportSummaryLabel(
-      reportSummaryLabelText,
-      year,
-    );
-    tablesContainer.append(reportSummaryLabel, table);
-  } else {
-    tablesContainer.append(table);
-  }
+  return table;
 };
 
 var tableHeadContent = `

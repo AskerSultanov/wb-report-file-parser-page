@@ -5,24 +5,30 @@ import switchToFirstTable from "./switchToFirstTable.js";
 import getReportPeriodText from "./getReportPeriodText.js";
 import enableTablesSwitcher from "./enableTablesSwitcher.js";
 import tablesSwitcherHandler from "./tablesSwitcherHandler.js";
+import createDownloadReportAsXlsxButton from "./createDownloadReportAsXlsxButton.js";
 import downloadReportAsXlsxButtonHandler from "./downloadReportAsXLSXButtonHandler.js";
 import calcReportTotalsFromSkus from "./utils/calcUtils/utils/calcReportTotalsFromSkus.js";
-import { enableDownloadReportAsXLSXButton } from "./toggleDownloadReportAsXlsxButtonVisibility.js";
 
 var yearValueStub = "";
 var reportSummaryLabelTextStub = "";
 
 var textContentToDecodeButton = "Получить новый отчёт";
 
+var pageMainContainer = document.getElementById("main");
 var decodeReportButton = document.getElementById("decode-report-button");
 
-var showReport = async (report) => {
+var buildReportBlock = async (report) => {
   var { dateFrom, dateTo, isCrossYearPeriod, skus, reportId } = report;
 
   var startYear = +report.dateFrom.split("-")[0];
   var endYear = +report.dateTo.split("-")[0];
 
   var { reportTotals } = calcReportTotalsFromSkus(skus);
+  var tablesContainer = document.createElement("div");
+
+  tablesContainer.hidden = true;
+  tablesContainer.setAttribute("tables-container", "");
+  tablesContainer.id = "tables-container-" + reportId;
 
   if (isCrossYearPeriod) {
     var { splitedReport } = splitReport(report);
@@ -35,13 +41,15 @@ var showReport = async (report) => {
         dateTo,
       ).reportPeriodText;
 
-      createTotalsTable(
+      var parentTotalsTable = createTotalsTable(
         reportId,
         reportTotals,
         yearValueStub,
         isCrossYearPeriod,
         fullReportPeriodText,
       );
+
+      tablesContainer.append(parentTotalsTable);
 
       enableTablesSwitcher([startYear, endYear]);
 
@@ -66,7 +74,7 @@ var showReport = async (report) => {
           targetPeriod,
         );
 
-        createTotalsTable(
+        var childTotalsTable = createTotalsTable(
           reportId,
           reportTotals,
           year,
@@ -74,7 +82,9 @@ var showReport = async (report) => {
           reportPeriodText,
         );
 
-        createSkusTable(report, reportPart);
+        var skusTable = createSkusTable(report, reportPart);
+
+        tablesContainer.append(childTotalsTable, skusTable);
       }
 
       switchToFirstTable(startYear);
@@ -86,7 +96,7 @@ var showReport = async (report) => {
     report.isCrossYearPeriod = false;
   }
 
-  createTotalsTable(
+  var totalsTable = createTotalsTable(
     reportId,
     reportTotals,
     yearValueStub,
@@ -94,9 +104,13 @@ var showReport = async (report) => {
     reportSummaryLabelTextStub,
   );
 
-  createSkusTable(report, skus);
+  var skusTable = createSkusTable(report, skus);
 
-  enableDownloadReportAsXLSXButton();
+  tablesContainer.append(totalsTable, skusTable);
+  var downloadReportAsXlsxButton = createDownloadReportAsXlsxButton(reportId);
+
+  pageMainContainer.append(downloadReportAsXlsxButton, tablesContainer);
+
   downloadReportAsXlsxButtonHandler(reportId);
 
   if (isCrossYearPeriod) {
@@ -108,4 +122,4 @@ var showReport = async (report) => {
   decodeReportButton.textContent = textContentToDecodeButton;
 };
 
-export default showReport;
+export default buildReportBlock;

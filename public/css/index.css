@@ -111,7 +111,7 @@ main {
     max-width: 320px;
   }
 
-  #download-report-as-xlsx-button {
+  .download-report-as-xlsx-button {
     width: 100%;
     max-width: 320px;
   }
@@ -121,7 +121,7 @@ main {
   margin-top: 40px;
 }
 
-#download-report-as-xlsx-button {
+.download-report-as-xlsx-button {
   background-color: var(--bg-elevated);
   color: var(--text-primary);
   border: 1px solid var(--border-strong);
@@ -135,7 +135,7 @@ main {
   transition: var(--transition-base);
 }
 
-#download-report-as-xlsx-button:hover {
+.download-report-as-xlsx-button:hover {
   background-color: #217346;
   border-color: #217346;
   color: #fff;
@@ -152,7 +152,7 @@ main {
   padding: 0 16px;
 }
 
-.download-xlsx-wrapper:has(#download-report-as-xlsx-button:not([hidden])) {
+.download-xlsx-wrapper:has(.download-report-as-xlsx-button:not([hidden])) {
   margin: 32px auto 24px;
 }
 
@@ -361,7 +361,7 @@ th:last-child {
 }
 
 #decode-report-button:focus-visible,
-#download-report-as-xlsx-button:focus-visible,
+.download-report-as-xlsx-button:focus-visible,
 #download-reports-in-zip:focus-visible,
 #auth:focus-visible,
 #registration:focus-visible,

@@ -1,7 +1,22 @@
-var button = document.getElementById("download-report-as-xlsx-button");
+var enableDownloadReportAsXLSXButton = (reportId) => {
+  var buttons = document.querySelectorAll("button[xlsx-button]");
 
-var enableDownloadReportAsXLSXButton = () => (button.hidden = false);
+  var requiredButtonId = "download-report-as-xlsx-button-" + reportId;
 
-var disableDownloadReportAsXLSXButton = () => (button.hidden = true);
+  for (var button of buttons) {
+    if (button.id === requiredButtonId) {
+      console.log(requiredButtonId);
+      button.hidden = false;
+    } else {
+      button.hidden = true;
+    }
+  }
+};
 
-export { enableDownloadReportAsXLSXButton, disableDownloadReportAsXLSXButton };
+var disableDownloadReportAsXLSXButtons = () => {
+  var buttons = document.querySelectorAll("button[xlsx-button]");
+
+  buttons.forEach((btn) => (btn.hidden = false));
+};
+
+export { enableDownloadReportAsXLSXButton, disableDownloadReportAsXLSXButtons };

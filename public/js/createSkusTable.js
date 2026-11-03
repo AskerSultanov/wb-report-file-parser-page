@@ -92,8 +92,7 @@ var createSkusTable = (report, skus) => {
 
   var wrappedToScrollTable = wrapTableToScrollElem(table);
 
-  var tablesContainer = document.getElementById("tables-container");
-  tablesContainer.append(wrappedToScrollTable);
+  return wrappedToScrollTable;
 };
 
 export default createSkusTable;
