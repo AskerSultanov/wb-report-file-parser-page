@@ -1,6 +1,7 @@
 import insertAfter from "./insertAfter.js";
-import enableReport from "./enableReport.js";
+import buildReportBlock from "./buildReportBlock.js";
 import getReportPeriodText from "./getReportPeriodText.js";
+import getReportFromLocalStorage from "./getReportFromLocalStorage.js";
 
 var infoBlocksRow = document.getElementById("info-blocks-row");
 
@@ -15,7 +16,10 @@ var createReportSelector = (reports) => {
     for (var option of selector.children) {
       if (option.selected) {
         var reportId = option.value;
-        enableReport(reportId);
+
+        var { report } = getReportFromLocalStorage(reportId);
+
+        buildReportBlock(report);
       }
     }
   });

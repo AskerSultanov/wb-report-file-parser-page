@@ -96,14 +96,13 @@ var createEditableSkuFieldModal = (
 
     updateReportFromLocalStorage(year, skuName, reportId, updatedSku);
 
-    updateSkusTableFields(year, skuName, reportId, updatedSku);
+    updateSkusTableFields(year, skuName, updatedSku);
 
     if (isCrossYearPeriod) {
       updateTotalsTableFields(
         year,
         updatedSku,
         prevSkuFieldsValues,
-        reportId,
         isCrossYearPeriod,
       );
 
@@ -113,7 +112,6 @@ var createEditableSkuFieldModal = (
         year,
         updatedSku,
         prevSkuFieldsValues,
-        reportId,
         isCrossYearPeriod,
       );
     }

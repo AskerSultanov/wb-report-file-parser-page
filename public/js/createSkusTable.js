@@ -58,10 +58,10 @@ var createSkusTable = (report, skus) => {
     var acceptance = createTdElement(sku.acceptance);
     var profit = createTdElement(sku.profit);
 
-    var profitMarginTdId = `profitMargin-${sku.skuName}-${report.reportId}-${sku.year}`;
+    var profitMarginTdId = `profitMargin-${sku.skuName}-${sku.year}`;
     var profitMargin = createTdElement(sku.profitMargin, profitMarginTdId);
 
-    var finalProfitTdId = `finalProfit-${sku.skuName}-${report.reportId}-${sku.year}`;
+    var finalProfitTdId = `finalProfit-${sku.skuName}-${sku.year}`;
     var finalProfit = createTdElement(sku.finalProfit, finalProfitTdId);
 
     tableRow.append(
@@ -92,7 +92,8 @@ var createSkusTable = (report, skus) => {
 
   var wrappedToScrollTable = wrapTableToScrollElem(table);
 
-  return wrappedToScrollTable;
+  var tablesContainer = document.getElementById("tables-container");
+  tablesContainer.append(wrappedToScrollTable);
 };
 
 export default createSkusTable;

@@ -1,10 +1,10 @@
-import enableReport from "../../enableReport.js";
 import buildReportBlock from "../../buildReportBlock.js";
 import reportFileParser from "../reportsFileParser/index.js";
 import createReportSelector from "../../createReportSelector.js";
 import writeReportToLocalStorage from "../../writeReportToLocalStorage.js";
 import insertButtonToDownloadReportsInZip from "./insertButtonToDownloadReportsInZip.js";
 import downloadReportAsXlsxButtonHandler from "../../downloadReportAsXLSXButtonHandler.js";
+import { enableDownloadReportAsXLSXButton } from "../../toggleDownloadReportAsXlsxButtonVisibility.js";
 
 var maxFilesCount = 15;
 var selectedFiles = [];
@@ -226,34 +226,28 @@ var createUploadBtn = () => {
 
     closeModal();
 
-    var { reportsData } = await reportFileParser(files);
+    var { reports } = await reportFileParser(files);
 
-    if (reportsData.length > 1) {
-      var reportIds = reportsData.map(({ dateFrom, dateTo, reportId }) => {
-        return { dateFrom, dateTo, reportId };
-      });
+    if (!reports.length) {
+      alert("Пусто...");
+      return;
+    }
 
-      var firstReport = reportsData.splice(0, 1)[0];
+    var firstReport = reports[0];
+    var restReports = reports.slice(1, reports.length);
 
-      buildReportBlock(firstReport);
-      enableReport(firstReport.reportId);
-      writeReportToLocalStorage(firstReport);
-      downloadReportAsXlsxButtonHandler(firstReport.reportId);
+    buildReportBlock(firstReport);
+    enableDownloadReportAsXLSXButton();
+    writeReportToLocalStorage(firstReport);
+    downloadReportAsXlsxButtonHandler(firstReport);
 
-      for (var report of reportsData) {
-        buildReportBlock(report);
+    if (restReports.length) {
+      for (var report of restReports) {
         writeReportToLocalStorage(report);
-        downloadReportAsXlsxButtonHandler(report.reportId);
       }
 
       insertButtonToDownloadReportsInZip();
-      createReportSelector(reportIds);
-    } else {
-      var report = reportsData[0];
-
-      buildReportBlock(report);
-      writeReportToLocalStorage(report);
-      downloadReportAsXlsxButtonHandler(report.reportId);
+      createReportSelector(reports);
     }
   });
 

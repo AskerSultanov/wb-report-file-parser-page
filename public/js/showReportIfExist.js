@@ -1,8 +1,8 @@
-import enableReport from "./enableReport.js";
 import buildReportBlock from "./buildReportBlock.js";
 import createReportSelector from "./createReportSelector.js";
 import getReportsFromLocalStorage from "./getReportsFromLocalStorage.js";
 import downloadReportAsXlsxButtonHandler from "./downloadReportAsXLSXButtonHandler.js";
+import { enableDownloadReportAsXLSXButton } from "./toggleDownloadReportAsXlsxButtonVisibility.js";
 import insertButtonToDownloadReportsInZip from "./utils/reportFileUploadModalWindow/insertButtonToDownloadReportsInZip.js";
 
 var showReportIfExist = () => {
@@ -13,23 +13,17 @@ var showReportIfExist = () => {
       return;
     }
 
-    var reportIds = reports.map(({ dateFrom, dateTo, reportId }) => {
-      return { dateFrom, dateTo, reportId };
-    });
-
-    var firstReport = reports.splice(0, 1)[0];
+    var firstReport = reports[0];
+    var restReports = reports.slice(1, reports.length - 1);
 
     buildReportBlock(firstReport);
-    enableReport(firstReport.reportId);
-    downloadReportAsXlsxButtonHandler(firstReport.reportId);
+    enableDownloadReportAsXLSXButton();
+    downloadReportAsXlsxButtonHandler(firstReport);
 
-    for (var restReport of reports) {
-      buildReportBlock(restReport);
-      downloadReportAsXlsxButtonHandler(restReport.reportId);
+    if (restReports.length) {
+      insertButtonToDownloadReportsInZip();
+      createReportSelector(reports);
     }
-
-    insertButtonToDownloadReportsInZip();
-    createReportSelector(reportIds);
   } catch {
     return;
   }

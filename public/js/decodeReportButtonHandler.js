@@ -1,4 +1,5 @@
 import createUploadModal from "./utils/reportFileUploadModalWindow/createUploadModal.js";
+import { disableDownloadReportAsXLSXButton } from "./toggleDownloadReportAsXlsxButtonVisibility.js";
 
 var decodeReportButton = document.getElementById("decode-report-button");
 
@@ -6,20 +7,21 @@ var textContentToDecodeReportButton = "Расшифровка отчета бе�
 
 var decodeReportButtonHandler = () => {
   decodeReportButton.onclick = () => {
-    var tablesContainers = document.querySelectorAll("div[tables-container]");
+    var tablesContainers = document.getElementById("tables-container");
 
-    if (tablesContainers.length) {
+    if (tablesContainers.childNodes.length) {
       var confirmed = confirm(
-        "Получение нового отчета привёдет к потере текущего.\nПродолжить?",
+        "Получение новых отчетов привёдет к потере текущих.\nПродолжить?",
       );
 
       if (confirmed) {
         localStorage.clear();
         removeReportSelector();
         removeReportsSummaryLabels();
-        removeownloadReportsInZipButton();
-        removeAllDownloadReportInXlsxButtons();
-        removeAllTablesContainers(tablesContainers);
+        removeDownloadReportsInZipButton();
+        disableDownloadReportAsXLSXButton();
+        removeTablesContainerContent(tablesContainers);
+
         decodeReportButton.textContent = textContentToDecodeReportButton;
 
         createUploadModal();
@@ -32,13 +34,8 @@ var decodeReportButtonHandler = () => {
 
 decodeReportButtonHandler();
 
-function removeAllDownloadReportInXlsxButtons() {
-  var buttonContainers = document.querySelectorAll(".download-xlsx-wrapper");
-  buttonContainers.forEach((item) => item.remove());
-}
-
-function removeAllTablesContainers(tablesContainers) {
-  tablesContainers.forEach((item) => item.remove());
+function removeTablesContainerContent(tablesContainers) {
+  tablesContainers.innetHTML = "";
 }
 
 function removeReportSelector() {
@@ -51,7 +48,7 @@ function removeReportsSummaryLabels() {
   labels.forEach((label) => label.remove());
 }
 
-function removeownloadReportsInZipButton() {
+function removeDownloadReportsInZipButton() {
   var button = document.getElementById("download-reports-in-zip");
   button?.remove();
 }
