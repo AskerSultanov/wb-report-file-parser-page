@@ -14,6 +14,7 @@ var createSkusTable = (report, skus) => {
 
   for (var sku of skus) {
     var tableRow = document.createElement("tr");
+    tableRow.id = 'sku-table-row-' + sku.skuName
 
     var qty = createTdElement(sku.qty);
     var skuName = createTdElement(sku.skuName);
@@ -86,7 +87,7 @@ var createSkusTable = (report, skus) => {
   var table = document.createElement("table");
   table.id = "skus-table-" + sku.year;
 
-  var { tableHead } = createSkusTableHead();
+  var { tableHead } = createSkusTableHead(sku.year);
 
   table.append(tableHead, tableBody);
 
@@ -98,8 +99,9 @@ var createSkusTable = (report, skus) => {
 
 export default createSkusTable;
 
-var tableHeadContent = `
-   <tr>
+function createSkusTableHead(theadId) {
+  var tableHeadContent = `
+   <tr id="thead-tr-${theadId}">
           <th>Артикул</th>
           <th>Количество</th>
           <th>Возвраты</th>
@@ -115,7 +117,6 @@ var tableHeadContent = `
           <th>Итого</th>
   </tr>`;
 
-function createSkusTableHead() {
   var tableHead = document.createElement("thead");
   tableHead.innerHTML = tableHeadContent;
   return { tableHead };
