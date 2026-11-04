@@ -35,7 +35,7 @@ var createBulkEditableModal = (
   var modalContent = createDiv("modal-content");
 
   var titleStartPart = titlesStartPartMap[updateField];
-  var fullTitle = titleStartPart + skus.length + " товаров";
+  var fullTitle = titleStartPart + skus.length + " sku";
   var title = createTitle("modal-title", fullTitle);
 
   var input = document.createElement("input");

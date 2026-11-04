@@ -39,7 +39,12 @@ var createSetBulkCostPriceButton = (skus, reportId, isCrossYearPeriod) => {
     var hasActiveModal = document.getElementById("modal-window");
 
     if (!hasActiveModal) {
-      createBulkEditableModal(skus, reportId, updateField, isCrossYearPeriod);
+      createBulkEditableModal(
+        filteredSkus,
+        reportId,
+        updateField,
+        isCrossYearPeriod,
+      );
     }
   }
 };
