@@ -1,7 +1,4 @@
-import insertAfter from "./insertAfter.js";
-import createSetBulkCostPriceButton from "./createSetBulkCostPriceButton.js";
 import createButton from "./utils/editableSkuFieldModal/utils/createButton.js";
-import createSetBulkOtherExpensesButton from "./createSetBulkOtherExpensesButton.js";
 import addCheckboxesToSkusTable from "./utils/checkboxes/addCheckboxesToSkusTable.js";
 import removeCheckboxesFromSkusTable from "./utils/checkboxes/removeCheckboxesFromSkusTable.js";
 
@@ -10,16 +7,20 @@ var text = "Выбрать";
 var newText = "Убрать выделение";
 var className = "sku-selector-btn";
 
-var bulkCostPriceButtonId = "set-bulk-cost-price";
-var bulkOtherExpensesButtonId = "set-bulk-other-expenses";
-
-var createSkuSelectorButton = (skus, reportId, isCrossYearPeriod) => {
+var createSkuSelectorButton = (
+  skus,
+  reportId,
+  isCrossYearPeriod,
+  bulkButtons = [],
+) => {
   var { year } = skus[0];
 
   var button = createButton(className, text, {
     event,
     cb: skuSelectorButtonHandler,
   });
+  button.type = "button";
+  button.setAttribute("aria-pressed", "false");
 
   return button;
 
@@ -27,38 +28,36 @@ var createSkuSelectorButton = (skus, reportId, isCrossYearPeriod) => {
     var { checkboxesIsExist } = checkCheckboxesExist(year);
 
     if (checkboxesIsExist) {
-      button.textContent = text;
-
-      removeCheckboxesFromSkusTable(year);
-
-      var setBulkCostPriceButton = document.getElementById(
-        bulkCostPriceButtonId,
-      );
-
-      var setBulkOtherExpensesButton = document.getElementById(
-        bulkOtherExpensesButtonId,
-      );
-
-      setBulkCostPriceButton?.remove();
-      setBulkOtherExpensesButton?.remove();
+      deactivateSelectionMode();
     } else {
-      button.textContent = newText;
+      activateSelectionMode();
+    }
+  }
 
-      addCheckboxesToSkusTable(skus);
+  function activateSelectionMode() {
+    button.textContent = newText;
+    button.classList.add("is-active");
+    button.setAttribute("aria-pressed", "true");
 
-      var setBulkCostPriceButton = createSetBulkCostPriceButton(
-        skus,
-        reportId,
-        isCrossYearPeriod,
-      );
-      var setBulkOtherExpensesButton = createSetBulkOtherExpensesButton(
-        skus,
-        reportId,
-        isCrossYearPeriod,
-      );
+    addCheckboxesToSkusTable(skus);
 
-      insertAfter(setBulkCostPriceButton, button);
-      insertAfter(setBulkOtherExpensesButton, setBulkCostPriceButton);
+    for (var bulkButton of bulkButtons) {
+      bulkButton.hidden = false;
+      // Пока ни один SKU не выбран — кнопки недоступны
+      bulkButton.disabled = true;
+    }
+  }
+
+  function deactivateSelectionMode() {
+    button.textContent = text;
+    button.classList.remove("is-active");
+    button.setAttribute("aria-pressed", "false");
+
+    removeCheckboxesFromSkusTable(year);
+
+    for (var bulkButton of bulkButtons) {
+      bulkButton.hidden = true;
+      bulkButton.disabled = true;
     }
   }
 };

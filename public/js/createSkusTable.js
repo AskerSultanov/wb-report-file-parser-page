@@ -1,6 +1,6 @@
 import createTdElement from "./createTdElement.js";
 import wrapTableToScrollElem from "./wrapTableToScroll.js";
-import createSkuSelectorButton from "./createSkuSelectorButton.js";
+import createActionBar from "./createActionBar.js";
 import openEditableSkuFieldModal from "./utils/editableSkuFieldModal/index.js";
 
 var hasNoSalesMsg =
@@ -96,15 +96,15 @@ var createSkusTable = (report, skus) => {
 
   var wrappedToScrollTable = wrapTableToScrollElem(table);
 
-  var skusSelectorButton = createSkuSelectorButton(
+  // Панель действий располагается между сводной и детальной таблицами
+  var { actionBar } = createActionBar(
     skus,
-    reportId,
-    isCrossYearPeriod,
+    report.reportId,
+    report.isCrossYearPeriod,
+    wrappedToScrollTable,
   );
 
-  tablesContainer.append(skusSelectorButton, wrappedToScrollTable);
-
-  var { reportId, isCrossYearPeriod } = report;
+  tablesContainer.append(actionBar, wrappedToScrollTable);
 };
 
 export default createSkusTable;
