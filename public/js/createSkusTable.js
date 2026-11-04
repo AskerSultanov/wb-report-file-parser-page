@@ -6,6 +6,8 @@ import openEditableSkuFieldModal from "./utils/editableSkuFieldModal/index.js";
 var hasNoSalesMsg =
   "Себестоимость не будет установлена: отсутствуют проданные единицы.";
 
+var tablesContainer = document.getElementById("tables-container");
+
 var createSkusTable = (report, skus) => {
   if (!skus.length) {
     return;
@@ -94,18 +96,15 @@ var createSkusTable = (report, skus) => {
 
   var wrappedToScrollTable = wrapTableToScrollElem(table);
 
-  var tablesContainer = document.getElementById("tables-container");
-  tablesContainer.append(wrappedToScrollTable);
-
-  var { reportId, isCrossYearPeriod } = report;
-
   var skusSelectorButton = createSkuSelectorButton(
     skus,
     reportId,
     isCrossYearPeriod,
   );
 
-  tablesContainer.append(skusSelectorButton);
+  tablesContainer.append(skusSelectorButton, wrappedToScrollTable);
+
+  var { reportId, isCrossYearPeriod } = report;
 };
 
 export default createSkusTable;

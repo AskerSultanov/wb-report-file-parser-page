@@ -1,3 +1,4 @@
+import insertAfter from "./insertAfter.js";
 import createSetBulkCostPriceButton from "./createSetBulkCostPriceButton.js";
 import createButton from "./utils/editableSkuFieldModal/utils/createButton.js";
 import createSetBulkOtherExpensesButton from "./createSetBulkOtherExpensesButton.js";
@@ -11,8 +12,6 @@ var className = "sku-selector-btn";
 
 var bulkCostPriceButtonId = "set-bulk-cost-price";
 var bulkOtherExpensesButtonId = "set-bulk-other-expenses";
-
-var tablesContainer = document.getElementById("tables-container");
 
 var createSkuSelectorButton = (skus, reportId, isCrossYearPeriod) => {
   var { year } = skus[0];
@@ -58,25 +57,13 @@ var createSkuSelectorButton = (skus, reportId, isCrossYearPeriod) => {
         isCrossYearPeriod,
       );
 
-      tablesContainer.append(
-        setBulkCostPriceButton,
-        setBulkOtherExpensesButton,
-      );
+      insertAfter(setBulkCostPriceButton, button);
+      insertAfter(setBulkOtherExpensesButton, setBulkCostPriceButton);
     }
   }
 };
 
 export default createSkuSelectorButton;
-
-function getCurrentPrimaryCheckboxStatus(year) {
-  var primaryCheckboxId = "checkbox-" + year;
-
-  var primaryCheckbox = document.getElementById(primaryCheckboxId);
-
-  var status = primaryCheckbox?.checked;
-
-  return { status };
-}
 
 function checkCheckboxesExist(year) {
   var primaryCheckboxId = "checkbox-" + year;
