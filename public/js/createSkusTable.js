@@ -1,5 +1,6 @@
 import createTdElement from "./createTdElement.js";
 import wrapTableToScrollElem from "./wrapTableToScroll.js";
+import createSkuSelectorButton from "./createSkuSelectorButton.js";
 import openEditableSkuFieldModal from "./utils/editableSkuFieldModal/index.js";
 
 var hasNoSalesMsg =
@@ -14,7 +15,7 @@ var createSkusTable = (report, skus) => {
 
   for (var sku of skus) {
     var tableRow = document.createElement("tr");
-    tableRow.id = 'sku-table-row-' + sku.skuName
+    tableRow.id = "sku-table-row-" + sku.skuName;
 
     var qty = createTdElement(sku.qty);
     var skuName = createTdElement(sku.skuName);
@@ -95,13 +96,23 @@ var createSkusTable = (report, skus) => {
 
   var tablesContainer = document.getElementById("tables-container");
   tablesContainer.append(wrappedToScrollTable);
+
+  var { reportId, isCrossYearPeriod } = report;
+
+  var skusSelectorButton = createSkuSelectorButton(
+    skus,
+    reportId,
+    isCrossYearPeriod,
+  );
+
+  tablesContainer.append(skusSelectorButton);
 };
 
 export default createSkusTable;
 
-function createSkusTableHead(theadId) {
+function createSkusTableHead(year) {
   var tableHeadContent = `
-   <tr id="thead-tr-${theadId}">
+   <tr id="thead-tr-${year}">
           <th>Артикул</th>
           <th>Количество</th>
           <th>Возвраты</th>
@@ -110,10 +121,10 @@ function createSkusTableHead(theadId) {
           <th>Штрафы</th>
           <th>Хранение</th>
           <th>Приёмка</th>
-          <th>Выплата с вычетом всех услуг WB</th>
+          <th>Перечисления продавцу</th>
           <th>Себестоимость 1ед.</th>
           <th>Прочие расходы</th>
-          <th>Маржинальность %</th>
+          <th>Маржа %</th>
           <th>Итого</th>
   </tr>`;
 
