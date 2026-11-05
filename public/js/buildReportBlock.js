@@ -15,7 +15,7 @@ var reportSummaryLabelTextStub = "";
 var textContentToDecodeButton = "Получить новый отчёт";
 var decodeReportButton = document.getElementById("decode-report-button");
 
-var buildReportBlock = async (report) => {
+var buildReportBlock = (report) => {
   decodeReportButton.textContent = textContentToDecodeButton;
 
   var tablesContainer = document.getElementById("tables-container");
