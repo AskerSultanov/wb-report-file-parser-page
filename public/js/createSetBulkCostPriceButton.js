@@ -32,7 +32,7 @@ var createSetBulkCostPriceButton = (skus, reportId, isCrossYearPeriod) => {
       var existSku = skuNames.find((skuName) => skuName === sku.skuName);
 
       if (existSku) {
-        filteredSkus.push(existSku);
+        filteredSkus.push(sku);
       }
     }
 

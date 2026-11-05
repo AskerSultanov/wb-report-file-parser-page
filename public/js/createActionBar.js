@@ -12,6 +12,7 @@ var createActionBar = (
   var { year } = skus[0];
 
   var actionBar = document.createElement("div");
+  actionBar.hidden = true;
   actionBar.className = "action-bar";
   actionBar.id = "action-bar-" + year;
   actionBar.setAttribute("role", "toolbar");

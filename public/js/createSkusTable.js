@@ -8,7 +8,7 @@ var hasNoSalesMsg =
 
 var tablesContainer = document.getElementById("tables-container");
 
-var createSkusTable = (report, skus) => {
+var createSkusTable = (skus, reportId, isCrossYearPeriod) => {
   if (!skus.length) {
     return;
   }
@@ -17,24 +17,25 @@ var createSkusTable = (report, skus) => {
 
   for (var sku of skus) {
     var tableRow = document.createElement("tr");
-    tableRow.id = "sku-table-row-" + sku.skuName;
+    tableRow.id = `sku-table-row-${sku.skuName}-${sku.year}`;
 
     var qty = createTdElement(sku.qty);
     var skuName = createTdElement(sku.skuName);
     var returnAmount = createTdElement(sku.returnAmount);
 
     var dataToUpdate = {
+      reportId,
+      isCrossYearPeriod,
+
       qty: sku.qty,
       year: sku.year,
       profit: sku.profit,
       skuName: sku.skuName,
       costPrice: sku.costPrice,
-      reportId: report.reportId,
       finalProfit: sku.finalProfit,
       retailAmount: sku.retailAmount,
       preTaxProfit: sku.preTaxProfit,
       otherExpenses: sku.otherExpenses,
-      isCrossYearPeriod: report.isCrossYearPeriod,
     };
 
     var hasNoSales = sku.profit === 0 || sku.qty === 0;
@@ -95,8 +96,6 @@ var createSkusTable = (report, skus) => {
   table.append(tableHead, tableBody);
 
   var wrappedToScrollTable = wrapTableToScrollElem(table);
-
-  var { reportId, isCrossYearPeriod } = report;
 
   if (skus.length > 1) {
     var { actionBar } = createActionBar(

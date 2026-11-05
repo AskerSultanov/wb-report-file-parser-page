@@ -5,7 +5,7 @@ var addCheckboxesToSkusTable = (skus) => {
   for (var sku of skus) {
     var { year, skuName } = sku;
 
-    var skuTableRowId = "sku-table-row-" + skuName;
+    var skuTableRowId = `sku-table-row-${skuName}-${year}`;
     var skuTableRow = document.getElementById(skuTableRowId);
 
     var { checkbox } = createCheckboxElem(year, skuName);
