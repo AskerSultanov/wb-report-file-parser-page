@@ -31,6 +31,8 @@ var buildReportBlock = async (report) => {
 
   var { reportTotals } = calcReportTotalsFromSkus(skus);
 
+  console.log({ isCrossYearPeriod });
+
   if (isCrossYearPeriod) {
     var { splitedReport } = splitReport(report);
 

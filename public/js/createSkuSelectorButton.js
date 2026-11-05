@@ -7,12 +7,7 @@ var text = "Выбрать";
 var newText = "Убрать выделение";
 var className = "sku-selector-btn";
 
-var createSkuSelectorButton = (
-  skus,
-  reportId,
-  isCrossYearPeriod,
-  bulkButtons = [],
-) => {
+var createSkuSelectorButton = (skus, bulkButtons = []) => {
   var { year } = skus[0];
 
   var button = createButton(className, text, {
@@ -43,7 +38,6 @@ var createSkuSelectorButton = (
 
     for (var bulkButton of bulkButtons) {
       bulkButton.hidden = false;
-      // Пока ни один SKU не выбран — кнопки недоступны
       bulkButton.disabled = true;
     }
   }

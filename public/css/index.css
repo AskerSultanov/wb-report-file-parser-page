@@ -584,14 +584,9 @@ th:last-child {
   justify-content: space-between;
   gap: 12px;
   width: 100%;
-  /* Совпадает с шириной контейнеров таблиц */
   max-width: 1250px;
   margin: 0 auto 12px;
-  /* Горизонтальные отступы совпадают с отступами ячеек таблиц */
   padding: 12px 10px;
-  background: var(--bg-surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
 }
 
 .action-bar__zone {

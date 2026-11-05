@@ -1,16 +1,8 @@
 import createSkuSelectorButton from "./createSkuSelectorButton.js";
 import createSetBulkCostPriceButton from "./createSetBulkCostPriceButton.js";
-import createSetBulkOtherExpensesButton from "./createSetBulkOtherExpensesButton.js";
 import getCheckedCheckboxes from "./utils/checkboxes/getCheckedCheckboxes.js";
+import createSetBulkOtherExpensesButton from "./createSetBulkOtherExpensesButton.js";
 
-/**
- * Панель действий между сводной и детальной таблицами.
- *
- * Левая зона — кнопка управления выделением (.sku-selector-btn).
- * Правая зона — кнопки массовых действий (.set-bulk-extra-amounts),
- * которые появляются только в режиме редактирования и активны лишь
- * при наличии хотя бы одного выбранного SKU.
- */
 var createActionBar = (
   skus,
   reportId,
@@ -36,6 +28,7 @@ var createActionBar = (
     reportId,
     isCrossYearPeriod,
   );
+
   var setBulkOtherExpensesButton = createSetBulkOtherExpensesButton(
     skus,
     reportId,
@@ -52,12 +45,8 @@ var createActionBar = (
   setBulkOtherExpensesButton.title =
     "Установить прочие расходы для выбранных SKU";
 
-  var skuSelectorButton = createSkuSelectorButton(
-    skus,
-    reportId,
-    isCrossYearPeriod,
-    bulkButtons,
-  );
+  var skuSelectorButton = createSkuSelectorButton(skus, bulkButtons);
+
   skuSelectorButton.setAttribute("aria-controls", "skus-table-" + year);
 
   hideBulkButtons();
@@ -66,7 +55,6 @@ var createActionBar = (
   rightZone.append(...bulkButtons);
   actionBar.append(leftZone, rightZone);
 
-  // Кнопки массовых действий активны только при выбранном хотя бы одном SKU
   skusTableScrollElem?.addEventListener("change", (e) => {
     if (e.target.matches('input[type="checkbox"]')) {
       syncBulkButtonsState();
