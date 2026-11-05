@@ -5,7 +5,7 @@ import downloadReportAsXlsxButtonHandler from "./downloadReportAsXLSXButtonHandl
 import { enableDownloadReportAsXLSXButton } from "./toggleDownloadReportAsXlsxButtonVisibility.js";
 import insertButtonToDownloadReportsInZip from "./utils/reportFileUploadModalWindow/insertButtonToDownloadReportsInZip.js";
 
-var showReportIfExist = () => {
+var bootstrapReportsFromStorage = () => {
   try {
     var { reports } = getReportsFromLocalStorage();
 
@@ -29,4 +29,4 @@ var showReportIfExist = () => {
   }
 };
 
-showReportIfExist();
+export default bootstrapReportsFromStorage
